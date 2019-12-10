@@ -1,0 +1,14 @@
+---
+- name: Criar diretório para o cassandra
+  file:
+    path: /cassandra
+    state: directory
+    mode: 0755
+
+- name: Download cassandra
+  unarchive:
+    src: https://www-us.apache.org/dist/cassandra/{{ version_cassandra }}/apache-cassandra-{{ version_cassandra }}-bin.tar.gz
+    dest: /cassandra
+    remote_src: yes
+
+  

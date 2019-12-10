@@ -1,0 +1,6 @@
+---
+- name: Download Java-8
+  apt:
+   name: openjdk-8-jre
+   state: latest
+   install_recommends: no

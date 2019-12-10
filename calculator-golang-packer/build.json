@@ -1,0 +1,28 @@
+{
+  "builders": [{
+     "type": "docker",
+     "image": "alpine:3.7",
+     "commit": "true",
+     "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
+     "changes": [
+       "ENTRYPOINT /./calculadora"
+     ]
+  }],
+    
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["apk add --update && apk add python2 && apk add ansible"]
+    },
+    {
+    "type": "ansible",
+    "playbook_file": "playbook.yml"
+  }
+],
+
+  "post-processors": [{
+     "type": "docker-tag",
+     "repository": "calculadora-container",
+     "tag": "latest"
+  }]
+}

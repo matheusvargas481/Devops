@@ -1,0 +1,5 @@
+---
+- name: Download Java-8
+  apk:
+   name: openjdk8-jre
+   state: present

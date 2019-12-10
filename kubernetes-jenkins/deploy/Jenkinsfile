@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    stages {
+        stage('Deployment'){
+            steps {
+                sh '''
+                cd 3-devops/matheus-vargas/Tema-18/deploy && kubectl --kubeconfig /home/ilegra/.kube/config apply -f .
+                '''
+            }
+        }
+        stage('Verify state kubectl'){
+            steps {
+                sh '''
+                until kubectl --kubeconfig /home/ilegra/.kube/config get pods | grep "calculadora-go-minikube" | grep "Running"
+                do 
+                    echo "Not running"
+                    sleep 30
+                done
+                    echo "Running"
+                '''
+            }
+        }
+    }
+}

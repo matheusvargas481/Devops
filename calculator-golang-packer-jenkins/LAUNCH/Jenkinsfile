@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
+                docker run -d -p 8082:9000 calculadora-container:latest
+                '''
+            }
+        }
+    }
+}

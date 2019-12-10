@@ -1,0 +1,9 @@
+---
+- hosts: all
+  vars:
+    - version_kafka: 2.3.1
+    - subversion_version_kafka: 2.11
+  roles:
+  - base
+  - java8
+  - kafka

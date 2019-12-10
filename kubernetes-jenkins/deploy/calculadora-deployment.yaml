@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculadora-go-minikube
+spec: 
+  replicas: 1
+  selector:
+     matchLabels:
+         app: calculadora-go-minikube
+         role: master
+         tier: backend
+  template:
+    metadata:
+      labels:
+        app: calculadora-go-minikube
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: calculadora-go-minikube
+        image: matheusvargas/calculadora-minikube:1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+          - containerPort: 9000

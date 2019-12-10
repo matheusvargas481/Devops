@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+  - base
+  - go_install
+  - go_config

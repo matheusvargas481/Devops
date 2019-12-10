@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
+                cd 3-devops/matheus-vargas/Tema-16 && ./configGatling.sh
+                '''
+            }
+        }
+    }
+}

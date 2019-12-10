@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+    - version_elasticsearch: 7.4.2
+  roles:
+  - base
+  - java8
+  - elasticsearch

@@ -1,0 +1,8 @@
+---
+  - hosts: localhost
+    become: yes
+    vars:
+      - VAULT_VERSION: 1.3.0
+    roles:
+      - base
+      - vault_install

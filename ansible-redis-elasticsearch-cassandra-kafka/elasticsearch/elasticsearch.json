@@ -1,0 +1,29 @@
+{
+  "builders": [{
+     "type": "docker",
+     "image": "ubuntu:18.04",
+     "commit": "true",
+     "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
+     "changes": [
+      "USER elasticsearch",
+      "WORKDIR elasticsearch/elasticsearch-7.4.2",
+      "ENTRYPOINT [\"/bin/bash\", \"bin/elasticsearch\"]"
+     ]
+  }],
+    
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["apt-get update && apt-get install -y python3"]
+    },
+    {
+    "type": "ansible-local",
+    "playbook_file": "playbook.yml"
+  }],
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "elasticsearch",
+    "tag": "1"
+  }]
+}

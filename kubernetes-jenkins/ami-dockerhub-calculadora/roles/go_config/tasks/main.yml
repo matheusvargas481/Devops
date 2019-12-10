@@ -1,0 +1,21 @@
+---
+  - name: Copiar calculadora.go para o container
+    copy: 
+      src: calculadora.go
+      dest: /usr/local
+      
+  - name: Importar gorilla mux
+    shell: go get -u github.com/gorilla/mux
+  
+  - name: Modificar arquivo .bashrc
+    blockinfile:
+        dest: "$HOME/.bashrc"
+        block: |
+          export GOROOT=/usr/lib/go/bin
+          export GOPATH=/go
+          export PATH=/go/bin:$PATH
+        insertafter: EOF
+        create: yes
+  
+  - name: Buildar calculadora Go
+    shell: go build /usr/local/calculadora.go

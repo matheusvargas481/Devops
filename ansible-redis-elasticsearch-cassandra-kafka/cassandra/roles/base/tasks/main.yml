@@ -1,0 +1,13 @@
+---
+- name: apk update
+  apk:
+    update_cache: yes
+- name: Instalar unzip
+  apk:
+    name: unzip
+    state: present
+
+- name: Instalar tar
+  apk:
+    name: tar
+    state: present

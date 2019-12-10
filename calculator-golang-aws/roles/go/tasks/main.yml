@@ -1,0 +1,33 @@
+---
+  - name: Instalar git
+    become: yes
+    yum:
+      name: git
+      state: present
+
+  - name: Copiar calculadora.go para o container
+    copy: 
+      src: "calculadora.go"
+      dest: "$HOME"
+
+  - name: Download Golang
+    become: yes
+    unarchive:
+      src: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
+      dest: /usr/local
+      remote_src: yes
+  
+  - name: Modificar arquivo .bashrc
+    lineinfile:
+      dest: $HOME/.bashrc
+      line: export PATH=$PATH:/usr/local/go/bin
+      insertafter: EOF
+    
+  - name: Atualizar Env_Vars
+    shell: . $HOME/.bashrc
+
+  - name: Importar gorilla mux
+    shell: go get -u github.com/gorilla/mux
+
+  - name: Buildar calculadora Go
+    shell: go build $HOME/calculadora.go

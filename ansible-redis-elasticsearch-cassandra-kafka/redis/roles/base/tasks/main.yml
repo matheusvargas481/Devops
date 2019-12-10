@@ -1,0 +1,9 @@
+---
+  - name: apk update
+    apk:
+      update_cache: yes
+
+  - name: Instalação bash
+    apk:
+      name: bash
+      state: present

@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+    - version_cassandra: 3.11.5
+  roles:
+  - base
+  - java8
+  - cassandra

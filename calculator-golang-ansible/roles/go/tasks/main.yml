@@ -1,0 +1,74 @@
+---
+- name: Download Golang
+  become: yes
+  unarchive:
+    src: https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+
+- name: Criar diretório home Go
+  become: yes
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0775
+  with_items:
+  - "/usr/local/go"
+  - "/usr/local/go/bin"
+
+- name: Modificar arquivo .bashrc
+  blockinfile:
+    dest: "$HOME/.bashrc"
+    block: |
+      export GOPATH=$HOME/go
+      export GOBIN=$GOPATH/bin
+      export PATH=$GOBIN:$PATH:/usr/local/go/bin
+    insertafter: EOF
+    create: yes
+
+- name: Cria arquivo script veficar status microsserviço
+  file:
+    path: "$HOME/script_status_microsservico.sh"
+    state: touch
+
+- name: Cria Script status microsservico
+  blockinfile:
+    dest: "$HOME/script_status_microsservico.sh"
+    block: |
+      #!/bin/sh
+      if pgrep calculadora ;
+      then
+        echo "Microsserviço UP"
+      fi
+    insertafter: EOF
+    create: yes
+    mode: "a+x"
+
+- name: Cria arquivo script
+  file:
+    path: "$HOME/script.sh"
+    state: touch
+    
+- name: Instalar git
+  become: yes
+  apt:
+    name: git
+    state: present
+
+- name: Criar Script 
+  blockinfile:
+    dest: "$HOME/script.sh"
+    block: |
+      #!/bin/sh
+      /usr/local/go/bin/go get -u github.com/gorilla/mux
+      /usr/local/go/bin/go build calculadora.go
+      ./calculadora
+      if ! pgrep calculadora ;
+      then
+        echo "Microserviço DOWN"
+      fi
+    insertafter: EOF
+    create: yes
+    mode: "a+x"

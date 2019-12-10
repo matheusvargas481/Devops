@@ -1,0 +1,6 @@
+---
+  - name: Download Vault
+    unarchive:
+      src: https://releases.hashicorp.com/vault/{{ VAULT_VERSION }}/vault_{{ VAULT_VERSION }}_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes

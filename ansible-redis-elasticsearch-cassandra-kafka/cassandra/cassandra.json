@@ -1,0 +1,28 @@
+{
+  "builders": [{
+     "type": "docker",
+     "image": "alpine:3.7",
+     "commit": "true",
+     "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
+     "changes": [
+      "ENTRYPOINT [\"sh\", \"-c\", \"/cassandra/apache-cassandra-3.11.5/bin/cassandra -Rf\"]"
+     ]
+  }],
+    
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["apk add --update && apk add python3"]
+    },
+    {
+    "type": "ansible-local",
+    "playbook_file": "playbook.yml"
+  }
+],
+"post-processors": [
+  {
+    "type": "docker-tag",
+    "repository": "cassandra",
+    "tag": "1"
+  }]
+}

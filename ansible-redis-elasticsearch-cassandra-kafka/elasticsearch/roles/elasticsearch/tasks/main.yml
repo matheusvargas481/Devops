@@ -1,0 +1,28 @@
+---
+- name: Adicionar usuário Elasticsearch
+  user:
+   name: elasticsearch
+   comment: Usuário Elasticsearch
+   uid: 1000
+
+- name: Criar diretório para o Elasticsearch
+  file:
+    path: /elasticsearch
+    state: directory
+    mode: 0755
+
+- name: Download Elasticsearch
+  unarchive:
+    src: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ version_elasticsearch }}-linux-x86_64.tar.gz
+    dest: /elasticsearch
+    remote_src: yes
+    owner: elasticsearch
+
+- name: Alterar config elasticsearch
+  blockinfile:
+    path: /elasticsearch/elasticsearch-{{ version_elasticsearch }}/config/elasticsearch.yml
+    block: |
+      cluster.name: elasticsearch-cluster
+      network.host: 0.0.0.0
+      discovery.type: single-node
+    insertafter: EOF 

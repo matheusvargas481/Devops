@@ -1,0 +1,19 @@
+---
+- name: Adicionar usuário Kafka
+  user:
+   name: kafka
+   comment: Usuário Kafka
+   uid: 1000
+
+- name: Criar diretório para o Kafka
+  file:
+    path: /kafka
+    state: directory
+    mode: 0755
+
+- name: Download Kafka
+  unarchive:
+    src: https://www-us.apache.org/dist/kafka/{{ version_kafka }}/kafka_{{ subversion_version_kafka }}-{{ version_kafka }}.tgz
+    dest: /kafka
+    remote_src: yes
+    owner: kafka

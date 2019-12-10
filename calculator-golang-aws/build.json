@@ -1,0 +1,25 @@
+{
+    "variables": {
+      "aws_access_key": "{{ env `AWSAccessKeyId`}}",
+      "aws_secret_key": "{{ env `AWSSecretKey`}}"
+    },
+    "builders": [{
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "ca-central-1",
+      "ami_virtualization_type":"hvm",
+      "ami_name": "calculadoraGo_devops_tema13",
+      "source_ami": "ami-085edf38cedbea498" ,
+      "instance_type": "t2.micro",
+      "communicator": "ssh",
+      "ssh_keypair_name": "kp_devops_tema13",
+      "ssh_private_key_file": "/home/ilegra/.ssh/kp_devops_tema13.pem",
+      "ssh_username": "ec2-user"
+    }],
+  
+    "provisioners": [{
+      "type": "ansible",
+      "playbook_file": "playbook.yml"
+    }]
+}

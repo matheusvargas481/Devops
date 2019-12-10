@@ -1,0 +1,19 @@
+---
+  - name: apk update
+    apk:
+      update_cache: yes
+
+  - name: Instalação bash
+    apk:
+      name: bash
+      state: present
+
+  - name: Instalação tar
+    apk:
+      name: tar
+      state: present
+
+  - name: Instalação Unzip
+    apk:
+      name: unzip
+      state: present

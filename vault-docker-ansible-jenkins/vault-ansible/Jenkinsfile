@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('Vault Provision') {
+            steps {
+                sh("ansible-playbook 3-devops/matheus-vargas/Tema-19/vault-ansible/playbook.yml --extra-vars='ansible_become_pass=$JENKINS_PASS'")
+            }
+        }
+    }
+}

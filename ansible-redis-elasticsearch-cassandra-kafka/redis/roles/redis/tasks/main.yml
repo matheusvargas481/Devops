@@ -1,0 +1,11 @@
+---
+- name: Instalando Redis
+  shell: apk add redis
+
+- name: Configurando Redis
+  blockinfile:
+    path: etc/redis.conf
+    block: | 
+      maxmemory 256mb
+      maxmemory-policy allkeys-lru
+    insertafter: EOF

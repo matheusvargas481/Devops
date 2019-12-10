@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
+                cd 3-devops/matheus-vargas/Tema-12
+                packer build build.json
+                '''
+            }
+        }
+    }
+}

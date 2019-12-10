@@ -1,0 +1,37 @@
+{
+    "builders": [{
+       "type": "docker",
+       "image": "alpine:3.7",
+       "commit": "true",
+       "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
+       "changes": [
+         "ENTRYPOINT /./calculadora"
+       ]
+    }],
+      
+  "provisioners": [
+  {
+      "type": "shell",
+      "inline": ["apk add python3"]
+  },
+  {
+      "type": "ansible",
+      "playbook_file": "playbook.yml"
+  }
+  ],
+  
+  "post-processors": 
+  [ [
+  {
+      "type": "docker-tag",
+      "repository": "[Your repository]",
+      "tag": "[Your tagname]"
+  },
+  {
+      "type": "docker-push",
+      "login": "true",
+      "login_username": "[Your username]",
+      "login_password": "[Your password]"
+  }
+  ]]
+}
